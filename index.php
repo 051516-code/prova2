@@ -111,9 +111,29 @@
         .success {
             font-size: 25px;
             color: greenyellow;
+            position: relative;
+            animation-name: success;
+            animation-duration: 4s;
+            z-index: 200;
+            animation-fill-mode: forwards;
         }
+
+        @keyframes success {
+            from {top: 0px;}
+            to {top: 250px; color: greenyellow;}
+        }
+
         .esconde {
-            display: none;
+            position: relative;
+            animation-name: successForm;
+            animation-duration: 4s;
+            z-index: 200;
+            animation-fill-mode: forwards;
+        }
+
+        @keyframes successForm {
+            from {top: 0px;}
+            to {top: 1000px; display: none;}
         }
         
     </style>
@@ -137,7 +157,9 @@ $cpf = "";
 
 if($_SERVER["REQUEST_METHOD"] == "POST") {
     
+$valido = false;
 
+   
     if(empty($_POST["nome"])) {
         $nomeErr = "obrigatorio";
     }else {
@@ -161,8 +183,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     }else {
         $cpf = test_input($_POST["cpf"]);
     }
+    
+    
 
     echo " <h1 class='success'> Enviado com sucesso </h1>";
+
+  
 
 }
 
@@ -176,7 +202,7 @@ function test_input($data) {
 ?>
 
 
-<div class="box ">
+<div class="box esconde">
     <h2>VALIDANDO FORMULARIOS</h2>
     <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
         <div class="single-input">
