@@ -76,6 +76,7 @@
     /* Button  */
         .wrapper{
             position: relative; 
+            border-color: gray;
             top: 50%;
             left:65%;
             transform: translate(-50%, -50%);
@@ -156,46 +157,53 @@ $idade ="";
 $cpf = "";
 
 if($_SERVER["REQUEST_METHOD"] == "POST") {
-    
-
-
    
-    if(empty($_POST["nome"])) {
-        $nomeErr = "obrigatorio";
-    }else {
-        $nome = test_input($_POST["nome"]);
-    }
+  
+    $valido = false;
 
-    if(empty($_POST["sobrenome"])) {
-        $sobrenomeErr = "obrigatorio";
-    }else {
-        $sobrenome = test_input($_POST["sobrenome"]);
-    }
+        if(empty($_POST["nome"])) {
+            $nomeErr = "obrigatorio";
+        }else {
+            $nome = test_input($_POST["nome"]);
+        }
+    
+        if(empty($_POST["sobrenome"])) {
+            $sobrenomeErr = "obrigatorio";
+        }else {
+            $sobrenome = test_input($_POST["sobrenome"]);
+        }
+    
+        if(empty($_POST["idade"])) {
+            $idadeErr = "obrigatorio";
+        }else {
+            $idade = test_input($_POST["idade"]);
+        }
+    
+        if(empty($_POST["cpf"])) {
+            $cpfErr = "obrigatorio";
+        }else {
+            $cpf = test_input($_POST["cpf"]);
+        }
+        
+       
+        if ($nomeErr == "" && $sobrenomeErr == "" && $idadeErr == ""  && $cpfErr == "") {
+            $valido = true;
+            echo " <h1 class='success'> Enviado com sucesso </h1>"; 
+        }
 
-    if(empty($_POST["idade"])) {
-        $idadeErr = "obrigatorio";
-    }else {
-        $idade = test_input($_POST["idade"]);
-    }
-
-    if(empty($_POST["cpf"])) {
-        $cpfErr = "obrigatorio";
-    }else {
-        $cpf = test_input($_POST["cpf"]);
-    }
     
     
-
-    echo " <h1 class='success'> Enviado com sucesso </h1>";
-
-
+        
 
 }
+    
+    
+    
 
 
-function create_txt() {
 
-}
+
+
 
 function test_input($data) {
     $data = trim($data);
@@ -206,7 +214,7 @@ function test_input($data) {
 ?>
 
 
-<div class="box">
+<div class="box <?= $valido ? 'esconde' : ''  ?>">
     <h2>VALIDANDO FORMULARIOS</h2>
     <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
         <div class="single-input">
@@ -229,7 +237,7 @@ function test_input($data) {
             <span class="error"><?= $idadeErr;?></span>
             <br><br>
         </div> 
-
+ 
         <div class="single-input">
             <input type="text" class="input" name="cpf" min="11" value=<?= $cpf ?>>
             <label for="cpf">CPF</label>
@@ -242,11 +250,7 @@ function test_input($data) {
         </div>
     </form>
 </div>
-<script>
-    const box =  document.getElementsByClassName("box")
-    box.classList.add("esconde");
 
-</script>
 </body>
 </html>
 
