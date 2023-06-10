@@ -157,7 +157,7 @@ $cpf = "";
 
 if($_SERVER["REQUEST_METHOD"] == "POST") {
     
-$valido = false;
+
 
    
     if(empty($_POST["nome"])) {
@@ -188,10 +188,14 @@ $valido = false;
 
     echo " <h1 class='success'> Enviado com sucesso </h1>";
 
-  
+
 
 }
 
+
+function create_txt() {
+
+}
 
 function test_input($data) {
     $data = trim($data);
@@ -202,7 +206,7 @@ function test_input($data) {
 ?>
 
 
-<div class="box esconde">
+<div class="box">
     <h2>VALIDANDO FORMULARIOS</h2>
     <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
         <div class="single-input">
@@ -238,7 +242,11 @@ function test_input($data) {
         </div>
     </form>
 </div>
+<script>
+    const box =  document.getElementsByClassName("box")
+    box.classList.add("esconde");
 
+</script>
 </body>
 </html>
 
