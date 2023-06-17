@@ -121,20 +121,21 @@
 
         @keyframes success {
             from {top: 0px;}
-            to {top: 250px; color: greenyellow;}
+            to {top: 100px; color: greenyellow;}
         }
 
         .esconde {
             position: relative;
             animation-name: successForm;
-            animation-duration: 4s;
-            z-index: 200;
+            animation-duration: 3s;
             animation-fill-mode: forwards;
+            z-index: 200;
         }
 
         @keyframes successForm {
-            from {top: 0px;}
-            to {top: 1000px; display: none;}
+            0% {top: 0px;}
+            25% {top : 250}
+            50% {top: 1000px; display: none;}
         }
         
     </style>
@@ -155,11 +156,9 @@ $nome = "";
 $sobrenome = "";
 $idade ="";
 $cpf = "";
+$valido = false;
 
 if($_SERVER["REQUEST_METHOD"] == "POST") {
-   
-  
-    $valido = false;
 
         if(empty($_POST["nome"])) {
             $nomeErr = "obrigatorio";
@@ -188,21 +187,22 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
        
         if ($nomeErr == "" && $sobrenomeErr == "" && $idadeErr == ""  && $cpfErr == "") {
             $valido = true;
+            $dados = "nome:".$nome.",sobrenome:".$sobrenome.",idade:".$idade.",cpf:".$cpf;
+                 
+            writeText($dados);
             echo " <h1 class='success'> Enviado com sucesso </h1>"; 
         }
-
-    
-    
-        
-
 }
-    
-    
-    
 
+function writeText($data) {
+    $arquivo ='base_de_dados.txt';
 
+    $fp = fopen($arquivo,"w");
 
+    fwrite($fp, $data);
 
+    fclose($fp);
+}
 
 
 function test_input($data) {
@@ -211,11 +211,13 @@ function test_input($data) {
     $data = htmlspecialchars($data);
     return $data;
 }
+
 ?>
 
 
 <div class="box <?= $valido ? 'esconde' : ''  ?>">
     <h2>VALIDANDO FORMULARIOS</h2>
+
     <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
         <div class="single-input">
             <input type="text" class="input" name="nome" value=<?= $nome ?>>
